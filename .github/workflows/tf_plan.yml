@@ -16,4 +16,4 @@ jobs:
         with:
           version: "0.12.15"
       - name: Build module "aws-instance-first-script"
-        run: cd terraform-git-example && terraform init && terraform validate && terraform plan -out terraform-plan
+        run: terraform init && terraform validate && terraform plan -out terraform-plan
