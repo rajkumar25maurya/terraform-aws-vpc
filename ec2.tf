@@ -5,8 +5,8 @@ resource "aws_key_pair" "ipraxa" {
 }
 
 resource "aws_instance" "PublicEC2" {
-    ami = "ami-09e67e426f25ce0d7"
-    instance_type = "t2.nano"
+    ami = "${var.ami}"
+    instance_type = "${var.instance_type}"
     vpc_security_group_ids = [ "${aws_security_group.allow_ssh.id}" ]
     subnet_id = "${aws_subnet.publicSubnet-A.id}"
     key_name = "ipraxa"
@@ -18,8 +18,8 @@ resource "aws_instance" "PublicEC2" {
     }
 
 resource "aws_instance" "PrivateEC2" {
-    ami = "ami-09e67e426f25ce0d7"
-    instance_type = "t2.nano"
+    ami = "${var.ami}"
+    instance_type = "${var.instance_type}"
     vpc_security_group_ids = [ "${aws_security_group.allow_ssh.id}" ]
     subnet_id = "${aws_subnet.privateSubnet-A.id}"
     key_name = "ipraxa"
