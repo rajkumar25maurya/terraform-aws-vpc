@@ -1,25 +1,29 @@
 resource "aws_subnet" "publicSubnet-A" {
-    vpc_id = "${aws_vpc.mainvpc.id}"
-    cidr_block = "${var.public_subnet_cidr}"
-    availability_zone = "us-east-1a"
+    for_each = var.public_subnets
+
+    vpc_id = aws_vpc.this.id
+    cidr_block = each.value.cidr
+    availability_zone = each.value.az
     map_public_ip_on_launch = true
 
     tags = {
-        Name = "PublicSubnet-A"
+        Name = each.key
     }
-    depends_on = [ "aws_vpc.mainvpc" ]
+    depends_on = [ aws_vpc.this ]
     
 }
 
 resource "aws_subnet" "privateSubnet-A" {
-    vpc_id = "${aws_vpc.mainvpc.id}"
-    cidr_block = "${var.private_subnet_cidr}"
-    availability_zone = "us-east-1a"
-    map_public_ip_on_launch = true
+    for_each = var.private_subnets
+
+    vpc_id = aws_vpc.this.id
+    cidr_block = each.value.cidr
+    availability_zone = each.value.az
+    map_public_ip_on_launch = false
 
     tags = {
-        Name = "Privateubnet-A"
+        Name = each.key
     }
-    depends_on = [ "aws_vpc.mainvpc" ]
+    depends_on = [ aws_vpc.this ]
     
 }
